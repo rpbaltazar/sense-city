@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Is my 
+    span
+      input#uuid(placeholder='sensor uuid', type='text', name='uuid')
+    | up?
+
+  button.btn.btn-lg.btn-info#imsu-checker(disabled) Check for me, please
