@@ -1,0 +1,15 @@
+development:
+  adapter: postgis
+  encoding: unicode
+  database: run_quality_development
+  pool: 5
+  username: balazar
+  password:
+
+test:
+  adapter: postgis
+  encoding: unicode
+  database: run_quality_test
+  pool: 5
+  username: balazar
+  password:
