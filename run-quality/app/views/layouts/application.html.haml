@@ -47,44 +47,6 @@
               %span.input-group-addon
                 %span.glyphicon.glyphicon-search
     #main.container-fluid
-      .row
-        #left.col-xs-2
-          %h2 Bootstrap Google Maps Demo
-          / item list
-          .panel.panel-default
-            .panel-heading
-              %a{:href => ""} Item heading
-          %p
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
-          %hr/
-          .panel.panel-default
-            .panel-heading
-              %a{:href => ""} Item heading
-          %p
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
-          %hr/
-          .panel.panel-default
-            .panel-heading
-              %a{:href => ""} Item heading
-          %p
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
-          %hr/
-          .panel.panel-default
-            .panel-heading
-              %a{:href => ""} Item heading
-          %p
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
-            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
-            Aliquam in felis sit amet augue.
-        .col-xs-10
-          = yield
+      = yield
+  %footer
+    = yield :scripts

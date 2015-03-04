@@ -1,5 +1,25 @@
-#map-canvas
+.row
+  #left.col-xs-3
+    %h2 Datacanvas Healthy Runner
+    / item list
+    .panel.panel-default
+      .panel-heading
+        Filters
+    %p
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+      Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+      dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+      Aliquam in felis sit amet augue.
+    %hr/
+  #map-canvas.col-xs-9
+    #map
 
-- content_for :scripts
-  gmaps4rails(<%= @hash %>)
-
+:javascript
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'} }, function(){
+    markers = handler.addMarkers(#{raw @hash.to_json });
+    handler.bounds.extendWith(markers);
+    handler.getMap().setZoom(4);
+  });
+  center = new google.maps.LatLng("1.3000", "103.8000");
+  handler.getMap().setCenter(center)
