@@ -65,12 +65,22 @@ body {
 
 #distance-filter {
   width: 100%;
+}
+
+#distance-filter-slider {
+  width: 100%;
 
   .slider-handle {
-    background: #168ccc
+    background: #168ccc;
+    opacity: 1;
   }
 
   .slider-selection {
-    background: #49bfff
+    background: #49bfff;
+  }
+
+  .slider-track {
+    background: #3498db;
+    // opacity: 0.65;
   }
 }

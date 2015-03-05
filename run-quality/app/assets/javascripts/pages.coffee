@@ -5,16 +5,17 @@
 class RunQuality.HomePage
   constructor: ->
     RunQuality.initMap(@_mapLoadedCallback) if _.isUndefined RunQuality.mapManager
-    @currentFilterDistance = 5
+    @currentFilterDistance = 20
 
-  updateMaxDistance: (evt) ->
+  updateMaxDistance: (evt) =>
     newDistance = evt.value
+    console.log newDistance, @currentFilterDistance
     if @currentFilterDistance != newDistance
       #updateUIValue
       @currentFilterDistance = newDistance
 
   filterRoutes: (evt) =>
-    RunQuality.apiManager.fetchRoutes({maxDistance: @currentFilterDistance}, @_routesSuccess)
+    RunQuality.apiManager.fetchRoutes({max_distance: @currentFilterDistance}, @_routesSuccess)
 
   _mapLoadedCallback: =>
     RunQuality.apiManager.fetchSensors(null, @_sensorsSuccess)
@@ -36,25 +37,29 @@ class RunQuality.HomePage
     if zoomLevel >= 12
       #fetch near routes
       center = RunQuality.mapManager.handler.getMap().getCenter()
-      RunQuality.apiManager.fetchRoutes(@_routesSuccess)
+      RunQuality.apiManager.fetchRoutes({max_distance: @currentFilterDistance}, @_routesSuccess)
+      @_toggleRouteFiltering('enable')
     else
+      @_toggleRouteFiltering('disable')
       RunQuality.mapManager.removeMarkers("routeCentroids")
+
+  _toggleRouteFiltering: (value) ->
+    $("#distance-filter").slider(value)
 
 ready = ->
   homePage = new RunQuality.HomePage()
 
   $("#distance-filter").slider(
-    id: "distance-filter"
-    min: 5
+    id: "distance-filter-slider"
+    min: 1
     max: 20
     step: 1
     orientation: 'horizontal'
-    value: 5
-    tooltip: 'Max distance of route centroid to sensor in kms'
+    value: 20
+    tooltip: 'show'
     handle: 'round'
   ).on('slide', homePage.updateMaxDistance)
     .on('slideStop', homePage.filterRoutes)
-
 
 
 $(document).ready(ready)
