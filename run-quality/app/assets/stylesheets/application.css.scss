@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "slider";
 
 html,body{
  height:100%;
@@ -59,5 +60,17 @@ body {
   label {
     width: auto;
     display:inline;
+  }
+}
+
+#distance-filter {
+  width: 100%;
+
+  .slider-handle {
+    background: #168ccc
+  }
+
+  .slider-selection {
+    background: #49bfff
   }
 }

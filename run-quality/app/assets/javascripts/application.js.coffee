@@ -16,4 +16,5 @@
 #= require lodash
 #= require gmaps/google
 #= require main
+#= require bootstrap-slider
 #= require_tree .
