@@ -15,5 +15,5 @@
 #= require turbolinks
 #= require lodash
 #= require gmaps/google
+#= require main
 #= require_tree .
-
