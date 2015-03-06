@@ -58,6 +58,7 @@ ready = ->
     value: 20
     tooltip: 'show'
     handle: 'round'
+    enabled: false
   ).on('slide', homePage.updateMaxDistance)
     .on('slideStop', homePage.filterRoutes)
 

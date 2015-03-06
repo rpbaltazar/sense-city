@@ -51,6 +51,7 @@
     @max = @element.data('slider-max') or options.max
     @step = @element.data('slider-step') or options.step
     @value = @element.data('slider-value') or options.value
+    @enabled = @element.data('slider-enabled') or options.enabled
     if @value[1]
       @range = true
     @selection = @element.data('slider-selection') or options.selection
@@ -90,18 +91,36 @@
     @size = @picker[0][@sizePos]
     @formater = options.formater
     @layout()
-    if @touchCapable
-      # Touch: Bind touch events:
-      @picker.on touchstart: $.proxy(@mousedown, this)
-    else
-      @picker.on mousedown: $.proxy(@mousedown, this)
-    if tooltip == 'show'
-      @picker.on
-        mouseenter: $.proxy(@showTooltip, this)
-        mouseleave: $.proxy(@hideTooltip, this)
-    else
-      @tooltip.addClass 'hide'
+    @initializeEvents = =>
+      console.log 'Enabled?', @enabled
+      if @enabled
+        if @touchCapable
+          # Touch: Bind touch events:
+          @picker.on touchstart: $.proxy(@mousedown, this)
+        else
+          @picker.on mousedown: $.proxy(@mousedown, this)
+
+      if tooltip == 'show'
+        @picker.on
+          mouseenter: $.proxy(@showTooltip, this)
+          mouseleave: $.proxy(@hideTooltip, this)
+      else
+        @tooltip.addClass 'hide'
+    @initializeEvents()
+    # if @touchCapable
+    #   # Touch: Bind touch events:
+    #   @picker.on touchstart: $.proxy(@mousedown, this)
+    # else
+    #   @picker.on mousedown: $.proxy(@mousedown, this)
+    # if tooltip == 'show'
+    #   @picker.on
+    #     mouseenter: $.proxy(@showTooltip, this)
+    #     mouseleave: $.proxy(@hideTooltip, this)
+    # else
+    #   @tooltip.addClass 'hide'
+
     return
+
 
   Slider.prototype =
     constructor: Slider
@@ -263,6 +282,7 @@
 
   $.fn.slider.defaults =
     min: 0
+    enabled: true
     max: 10
     step: 1
     orientation: 'horizontal'

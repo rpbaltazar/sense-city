@@ -5,7 +5,7 @@ class RoutesController < ApplicationController
       routes = Route.all
       p routes.count
     else
-      max_distance = params["max_distance"].to_i * 100
+      max_distance = params["max_distance"].to_i * 1000
       routes = []
       current_route_ids = ""
       # improve this by passing bounds of the map and fetching

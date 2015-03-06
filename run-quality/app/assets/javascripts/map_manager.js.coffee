@@ -27,7 +27,6 @@ class RunQuality.MapManager
       @_removeMarkers(@markersSet[setId])
 
   _removeMarkers: (markers) ->
-    console.log 'removeMarkers', markers
     @handler.removeMarkers(markers)
 
   _displayOnMap: (position) =>
