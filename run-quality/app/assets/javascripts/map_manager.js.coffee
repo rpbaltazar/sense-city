@@ -36,4 +36,3 @@ class RunQuality.MapManager
       center =  new google.maps.LatLng @defaultCenterCoordinates.latitude, @defaultCenterCoordinates.longitude
 
     @handler.map.centerOn(center)
-

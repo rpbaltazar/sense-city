@@ -9,9 +9,8 @@ class RunQuality.HomePage
 
   updateMaxDistance: (evt) =>
     newDistance = evt.value
-    console.log newDistance, @currentFilterDistance
     if @currentFilterDistance != newDistance
-      #updateUIValue
+      $("#distance-value").text(newDistance)
       @currentFilterDistance = newDistance
 
   filterRoutes: (evt) =>

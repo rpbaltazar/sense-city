@@ -72,7 +72,6 @@ body {
 
   .slider-handle {
     background: #168ccc;
-    opacity: 1;
   }
 
   .slider-selection {
@@ -81,6 +80,19 @@ body {
 
   .slider-track {
     background: #3498db;
-    // opacity: 0.65;
+  }
+
+  &.disabled {
+    .slider-handle {
+      background: #7f8c8d;
+    }
+
+    .slider-selection {
+      background: #7f8c8d;
+    }
+
+    .slider-track {
+      background: #7f8c8d;
+    }
   }
 }

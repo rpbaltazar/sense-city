@@ -28,7 +28,7 @@
       @picker[0].id = @id
     if typeof Modernizr != 'undefined' and Modernizr.touch
       @touchCapable = true
-    tooltip = @element.data('slider-tooltip') or options.tooltip
+    @sliderTooltip = @element.data('slider-tooltip') or options.tooltip
     @tooltip = @picker.find('.tooltip')
     @tooltipInner = @tooltip.find('div.tooltip-inner')
     @orientation = @element.data('slider-orientation') or options.orientation
@@ -91,21 +91,7 @@
     @size = @picker[0][@sizePos]
     @formater = options.formater
     @layout()
-    @initializeEvents = =>
-      console.log 'Enabled?', @enabled
-      if @enabled
-        if @touchCapable
-          # Touch: Bind touch events:
-          @picker.on touchstart: $.proxy(@mousedown, this)
-        else
-          @picker.on mousedown: $.proxy(@mousedown, this)
-
-      if tooltip == 'show'
-        @picker.on
-          mouseenter: $.proxy(@showTooltip, this)
-          mouseleave: $.proxy(@hideTooltip, this)
-      else
-        @tooltip.addClass 'hide'
+    @handleEnabledStatus()
     @initializeEvents()
 
     return
@@ -120,6 +106,27 @@
       #this.tooltip.css('left', left - this.tooltip.outerWidth()/2);
       @over = true
       return
+    handleEnabledStatus: ->
+      if @enabled
+        @picker.removeClass 'disabled'
+      else
+        @picker.addClass 'disabled'
+
+    initializeEvents: ->
+      if @enabled
+        if @touchCapable
+          # Touch: Bind touch events:
+          @picker.on touchstart: $.proxy(@mousedown, this)
+        else
+          @picker.on mousedown: $.proxy(@mousedown, this)
+
+      if @sliderTooltip == 'show'
+        @picker.on
+          mouseenter: $.proxy(@showTooltip, this)
+          mouseleave: $.proxy(@hideTooltip, this)
+      else
+        @tooltip.addClass 'hide'
+
     hideTooltip: ->
       if @inDrag == false
         @tooltip.removeClass 'in'
