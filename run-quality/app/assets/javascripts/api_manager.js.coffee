@@ -2,17 +2,24 @@ class RunQuality.ApiManager
   constructor: (baseUrl) ->
     @baseUrl = baseUrl || "http://localhost:3000/"
 
-  fetchSensors: (data, successCalback, errorCallback) ->
+  fetchSensors: (data, successCallback, errorCallback) ->
     url = "/sensors"
-    success = successCalback || @genericErrorHandler
+    success = successCallback || @genericErrorHandler
     error = errorCallback || @genericErrorHandler
     @getRequest(url, data, success, error)
 
-  fetchRoutes: (data, successCalback, errorCallback) ->
+  fetchRoutes: (data, successCallback, errorCallback) ->
     url = "/routes"
-    success = successCalback || -> console.log('success callback not implemented')
+    success = successCallback || -> console.log('success callback not implemented')
     error = errorCallback || -> console.log('error callback not implemented')
     @getRequest(url, data, success, error)
+
+  fetchRoute: (id, successCallback, errorCallback) ->
+    url = "/routes/#{id}"
+    success = successCallback || -> console.log('success callback not implemented')
+    error = errorCallback || -> console.log('error callback not implemented')
+    @getRequest(url, null, success, error)
+
 
   getRequest: (urlAppend, data, successCallback, errorCallback) ->
     url = @baseUrl+urlAppend

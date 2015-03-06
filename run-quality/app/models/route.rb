@@ -23,4 +23,8 @@ class Route < ActiveRecord::Base
     route_points.map{|point| [point.latitude, point.longitude]}
   end
 
+  def build_route_path
+
+  end
+
 end

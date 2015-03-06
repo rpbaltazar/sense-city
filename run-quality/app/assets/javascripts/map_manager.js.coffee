@@ -15,11 +15,14 @@ class RunQuality.MapManager
         @_displayOnMap()
       callback()
 
-  addMarkers: (markers, setId) ->
+  addMarkers: (markers, setId, eventListeners) ->
     if @markersSet[setId]?
       @_removeMarkers(@markersSet[setId])
 
     addedMarkers = @handler.addMarkers markers
+
+    @_setupEventListeners(addedMarkers, eventListeners)
+
     @markersSet[setId] = addedMarkers
 
   removeMarkers: (setId) ->
@@ -36,3 +39,8 @@ class RunQuality.MapManager
       center =  new google.maps.LatLng @defaultCenterCoordinates.latitude, @defaultCenterCoordinates.longitude
 
     @handler.map.centerOn(center)
+
+  _setupEventListeners: (markers, eventListeners) ->
+    _.each eventListeners, (eventListenerConfig) ->
+      _.each markers, (marker) ->
+        google.maps.event.addListener(marker.getServiceObject(), eventListenerConfig.event, -> eventListenerConfig.eventListener(marker))

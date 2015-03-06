@@ -24,10 +24,23 @@ class RunQuality.HomePage
     RunQuality.mapManager.addMarkers sensorMarkers, "sensors"
 
   _routesSuccess: (routesMarkers) =>
-    RunQuality.mapManager.addMarkers routesMarkers, "routeCentroids"
+    eventListeners = [{
+      event: 'click',
+      eventListener: @_markerClicked
+    }]
+    RunQuality.mapManager.addMarkers routesMarkers, "routeCentroids", eventListeners
+
+  _runningRouteSuccess: (route) =>
+    console.log route
 
   _setupListeners: =>
     google.maps.event.addListener(RunQuality.mapManager.handler.getMap(), 'zoom_changed', @_zoomChanged)
+
+  _markerClicked: (marker) =>
+    console.log 'marker clicked'
+    console.log arguments
+    routeId = Number marker.infowindow.content
+    RunQuality.apiManager.fetchRoute(routeId, @_runningRouteSuccess)
 
   _zoomChanged: =>
     zoomLevel = RunQuality.mapManager.handler.getMap().getZoom()

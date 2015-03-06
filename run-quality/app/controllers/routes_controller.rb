@@ -17,9 +17,9 @@ class RoutesController < ApplicationController
         current_route_ids = current_route_ids[0..-2]
 
         if current_route_ids != ""
-          routes = routes + Route.where("ST_Distance(centroid, 'POINT(#{s.longitude} #{s.latitude})') < #{max_distance} and id not in(#{current_route_ids})")
+          routes = routes + Route.where("ST_Distance(centroid, '#{s.coordinates}') < #{max_distance} and id not in(#{current_route_ids})")
         else
-          routes = routes + Route.where("ST_Distance(centroid, 'POINT(#{s.longitude} #{s.latitude})') < #{max_distance}")
+          routes = routes + Route.where("ST_Distance(centroid, '#{s.coordinates}') < #{max_distance}")
         end
       end
 
@@ -41,5 +41,14 @@ class RoutesController < ApplicationController
 
     render json: routes_hash.to_json
 
+  end
+
+  def show
+    route_id = params["id"].to_i
+    route = Route.find route_id
+
+    route.build_route_path
+
+    render json: {}
   end
 end
