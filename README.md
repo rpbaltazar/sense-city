@@ -19,6 +19,16 @@ The available sensors and it's units (according to the code notes):
 The code notes say that the temperature is collected in F, but looking at the values returned by my sensor, it is registering in C.
 ```
 
+```
+Copied from datacanvas website:
+
+The pollution indicator measures when harmful target gases (such as secondhand smoke, carbon monoxide, alcohol, etc.) are triggered and expresses their combined concentration in raw voltage. The output is raw voltage and the unit is mV. Higher mV is associated with increased pollutant gases. Peaks may happen around rush hour, when a bus or truck drives by, or during construction. You can access the data sheet for the air quality sensor here.
+The dust sensor measures the concentration of particulate matters (PM) above 1 micrometer in diameter. This sensor has a detection range of of [0-28’000 pcs/liter]. This sensor tells us the concentration of particulate matter per liter of air and the unit is pcs/Liter. pcs stands for pieces, or simply particles. You can access the data sheet for the dust sensor here (PDF).
+The humidity sensor measures relative humidity (RH), which is expressed as percentage and calculates the absolute humidity relative to the maximum for that temperature. This sensor can detect RH from 5 to 99% and operates within temperatures from minus 40 to 80 degree celsius. You can access the data sheet for the humidity sensor here (PDF).
+The light sensor measures digital light, or illuminance, measured in lux. Illuminance is a measure of how much luminous flux is spread over a given area, while luminous flux is a measure of the total “amount” of visible light present. See details about comparative lux values on Wikipedia. You can access the data sheet for the light sensor here (PDF).
+The noise sensor measures the raw output voltage of the sensor based on noise in the nearby environment in mV. To roughly convert these measurements to decibel (dB), use the formula dB = 0.0158x + 49.184, where x is the value output by the sensor. You can access the data sheet for the sound sensor here.
+```
+
 ## File structure
 
 ### endomondo
