@@ -17,14 +17,17 @@ class Route < ActiveRecord::Base
     save
   end
 
+  def polyline
+    route_points.sort.reduce([]) do |result, point|
+      result << {lat: point.latitude, lng: point.longitude }
+    end
+  end
+
   private
 
   def route_points_coords
     route_points.map{|point| [point.latitude, point.longitude]}
   end
 
-  def build_route_path
-
-  end
 
 end

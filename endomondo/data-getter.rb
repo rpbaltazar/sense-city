@@ -101,11 +101,11 @@ RIO_DE_JANEIRO = [
   'ci4x6nzle000k02tckylmop2g',
   'ci4q2f9cr000102t9di6kx27u',
 ]
+  # 'ci5c3vgzv000003v4deetujpe',
+  # 'ci4vk908n000h02s7pqy6aud3',
+  # 'ci4w9izto000302tcgj9hmy9m',
+  # 'ci4wmzegn000702tcc6dn993o',
 SHANGHAI = [
-  'ci5c3vgzv000003v4deetujpe',
-  'ci4vk908n000h02s7pqy6aud3',
-  'ci4w9izto000302tcgj9hmy9m',
-  'ci4wmzegn000702tcc6dn993o',
   'ci4s0caqw000002wey2s695ph',
   'ci4xdbcwd000o02tcoi729rb7',
   'ci4xrkkxy000203zz2qz5x2qt',
@@ -125,21 +125,59 @@ ALL_SENSORS = [
   BANGALORE
 ]
 
-ALL_SENSORS.each do |city|
-  city.each do |sensor_id|
-    uri = URI.parse "#{BASE_URL}/#{sensor_id}/#{REQUEST}?startIndex=0&count=1&sort=desc"
+def grab_sensor_coords json, sensor_id
+  sensor_reading = JSON.parse json
+  lon,lat = sensor_reading["data"][0]["data"]["location"]
+
+  CSV.open("coords.csv", "a") do |csv|
+    csv << [sensor_id, lat, lon]
+  end
+end
+
+
+def get_all_data sensor_id
+  uri = URI.parse "#{BASE_URL}/#{sensor_id}/#{REQUEST}?startIndex=0&count=1000"
+  http = Net::HTTP.new uri.host, uri.port
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+  request = Net::HTTP::Get.new uri.request_uri
+  response = http.request request
+
+  parsed_json = JSON.parse response.body
+
+  while !parsed_json.nil?
+    next_uri = parsed_json["links"]["next"]
+    puts next_uri
+    data = parsed_json["data"]
+    return if data.nil? || data == []
+    File.open("/Volumes/Data2/sense-city/#{sensor_id}.json", "a") do |f|
+      f.write data
+      f.write "\n"
+    end
+
+    uri = URI.parse next_uri
     http = Net::HTTP.new uri.host, uri.port
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
     request = Net::HTTP::Get.new uri.request_uri
-
+    sleep 1.5
     response = http.request request
-    sensor_reading = JSON.parse response.body
-    lon,lat = sensor_reading["data"][0]["data"]["location"]
+    parsed_json = JSON.parse response.body
+  end
+end
 
-    CSV.open("singapore.csv", "a") do |csv|
-      csv << [sensor_id, lat, lon]
-    end
+ALL_SENSORS.each do |city|
+  city.each do |sensor_id|
+    # uri = URI.parse "#{BASE_URL}/#{sensor_id}/#{REQUEST}?startIndex=0&count=1&sort=desc"
+    # http = Net::HTTP.new uri.host, uri.port
+    # http.use_ssl = true
+    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    #
+    # request = Net::HTTP::Get.new uri.request_uri
+    #
+    # response = http.request request
+    # grab_sensor_coords response.body, sensor_id
+    get_all_data sensor_id
   end
 end

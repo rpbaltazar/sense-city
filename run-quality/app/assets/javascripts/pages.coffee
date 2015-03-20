@@ -32,6 +32,7 @@ class RunQuality.HomePage
 
   _runningRouteSuccess: (route) =>
     console.log route
+    RunQuality.mapManager.addPolyline route.polyline, "route-path"
 
   _setupListeners: =>
     google.maps.event.addListener(RunQuality.mapManager.handler.getMap(), 'zoom_changed', @_zoomChanged)

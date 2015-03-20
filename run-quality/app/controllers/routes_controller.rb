@@ -47,8 +47,15 @@ class RoutesController < ApplicationController
     route_id = params["id"].to_i
     route = Route.find route_id
 
-    route.build_route_path
+    route.polyline
 
-    render json: {}
+    render json: {
+      id: route_id,
+      centroid: {
+        latitude: route.latitude,
+        longitude: route.longitude
+      },
+      polyline: route.polyline
+    }
   end
 end

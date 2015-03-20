@@ -4,6 +4,7 @@ class RunQuality.MapManager
     @cssId = cssId
     @defaultCenterCoordinates = {latitude: 1.3000, longitude: 103.8000}
     @markersSet = {}
+    @polylinesSet = {}
 
     @handler.buildMap {
       provider: {}
@@ -14,6 +15,12 @@ class RunQuality.MapManager
       else
         @_displayOnMap()
       callback()
+
+  addPolyline: (points, setId) ->
+    if @polylinesSet[setId]?
+      @_removePolyline(@polylinesSet[setId])
+
+    @polylinesSet[setId] = @handler.addPolyline points
 
   addMarkers: (markers, setId, eventListeners) ->
     if @markersSet[setId]?
@@ -31,6 +38,10 @@ class RunQuality.MapManager
 
   _removeMarkers: (markers) ->
     @handler.removeMarkers(markers)
+
+  _removePolyline: (polyline) ->
+    # @handler.removePolyline(polyline)
+    polyline.setMap null
 
   _displayOnMap: (position) =>
     if position?
